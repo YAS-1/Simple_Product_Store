@@ -1,0 +1,6 @@
+Needed {
+    express
+    dotenv
+    mongoose
+    nodemon
+}
