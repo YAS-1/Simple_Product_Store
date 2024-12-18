@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useStore } from "../Store/store";
-import { toaster } from "@/components/ui/toaster"
+import { toast } from "react-toastify";
 
 function CreatePage() {
 
@@ -20,13 +20,31 @@ function CreatePage() {
 
     const {createProduct} = useStore()
 
+	// handleAddProduct function performs the operation of adding a new product to the product list 
 	const handleAddProduct = async () => {
         console.log(newProduct)
         const { success, message } = await createProduct(newProduct);
-
-        console.log("Success:", success);
-        console.log("Message:", message);
-        
+		if(success){
+			toast.success("Product added successfully", { //The toast notification
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+			});
+		}
+		else {
+			toast.error(`Error: ${message}`, {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+			});
+		}  
+		SetnewProduct({name:"",price:"",image:""}); // To reset the fields
 	};
 
 	return (
@@ -38,11 +56,11 @@ function CreatePage() {
 					textAlign={"center"}
 					mb={8}
 					fontFamily={"revert"}
-					color='Highlight'
+					color={"honeydew"}
 					fontWeight={"bold"}>
 					Create New Product
 				</Heading>
-				<Box width={"full"} bg={"gray.800"} p={6} rounded={"lg"} shadow={"md"}>
+				<Box width={"1/2"} bg={"gray.800"} p={6} rounded={"lg"} shadow={"md"}>
 					<VStack spaceY={4}>
 
 						<Input

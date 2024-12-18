@@ -26,7 +26,7 @@ function Navbar() {
 
             <HStack wordSpacing={2} alignItems={"center"}>
                 <Link to={"/create"}>
-                    <Button size={["sm", "sm"]}> <FaPlusSquare fontSize={10}/></Button>
+                    <FaPlusSquare size={"20"}/>
                 </Link>
             </HStack>
         </Flex>
