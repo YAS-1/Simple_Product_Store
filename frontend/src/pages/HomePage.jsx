@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { Container, VStack, Text, SimpleGrid} from "@chakra-ui/react"
 import { useStore } from '../Store/store'
-import {} from "../components_2/ProductCard.jsx"
+import ProductCard from "../components_2/ProductCard.jsx"
 
 function HomePage() {
 
@@ -33,12 +33,12 @@ function HomePage() {
             md: 2,
             lg: 3,
           }}
-          spacing={10}
+          gap={"40px"}
           width={"full"}
         >
-          {/* {products.map((product) => (
-            // <ProductCard key={product._id} product={product}/>
-          ))} */}
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product}/>
+          ))}
         </SimpleGrid>
 
         <Text fontSize={"xl"} textAlign={"center"} fontWeight={"bold"} color={"gray.500"}>
