@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, Text, HStack } from "@chakra-ui/react";
+import { Box, Heading, Text, HStack, Image } from "@chakra-ui/react";
 import { MdDelete, MdUpdate } from 'react-icons/md';
 
 const ProductCard = ({ product }) => {
@@ -14,14 +14,13 @@ const ProductCard = ({ product }) => {
 			_hover={{ transform: "translateY(-5px)", shadow: "xl" }}>
 
 			<Box>
-				{/* <Image
+				<Image
 					src={product.image}
 					alt={product.name}
 					h={{ base: "12rem", md: "18rem" }}
 					w={"full"}
 					objectFit={"cover"}
-				/> */}
-        <img src={product.image} alt={product.name} />
+				/>
 			</Box>
         
 			<Box padding={4} bg={"blackAlpha.600"}>

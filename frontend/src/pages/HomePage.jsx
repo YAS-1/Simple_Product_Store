@@ -40,15 +40,18 @@ function HomePage() {
             <ProductCard key={product._id} product={product}/>
           ))}
         </SimpleGrid>
+        
+        { products.length === 0 && (
+          <Text fontSize={"xl"} textAlign={"center"} fontWeight={"bold"} color={"gray.500"}>
+            No Products to display 😢     
+            <Link to={"/create"}>
+              <Text color={"blue.500"} _hover={{textDecoration:"underline", color:"cyan.900"}} as={"span"}>
+                Create a Product
+              </Text>
+            </Link>
+          </Text>
+        )}
 
-        <Text fontSize={"xl"} textAlign={"center"} fontWeight={"bold"} color={"gray.500"}>
-          No Products to display 😢     
-          <Link to={"/create"}>
-            <Text color={"blue.500"} _hover={{textDecoration:"underline", color:"cyan.900"}} as={"span"}>
-              Create a Product
-            </Text>
-          </Link>
-        </Text>
 
       </VStack>
     </Container>
