@@ -8,7 +8,7 @@ import Navbar from "./components_2/Navbar.jsx";
 function App() {
 
   return (
-      <Box minH={"100vh"} bgGradient="to-r" gradientFrom={"#B0E0E6"} gradientTo={"#4169E1"}>
+      <Box minH={"100vh"} bgGradient="to-r" gradientFrom={"#F8F8FF"} gradientTo={"#000000"}>
         <Navbar/>
         <Routes>
           <Route path="/" element = {<HomePage />}/>

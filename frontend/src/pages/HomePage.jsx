@@ -23,6 +23,7 @@ function HomePage() {
           bgGradient="to-r" gradientFrom={"blue.600"} gradientTo={"cyan.900"}
           bgClip={"text"}
           textAlign={"center"}
+          marginBottom={10}
         >
           Current Products 🚀
         </Text>
