@@ -50,7 +50,63 @@ export const useStore = create((set) => ({
 		// Updates the ui immediately
 		set((state) => ({ products: state.products.filter((product) => product._id !== pid)}));
 		return { success: true, message: "Product deleted successfully." };
-	}
+	},
+
+	// method for updating a product at the frontend
+	// updateProduct: async (pid, updatedProduct) => {
+	// 	const res = await fetch(`/api/products/${pid}`, {
+	// 		method: "PUT",
+	// 		headers: {
+	// 			"Content-Type": "application/json",
+	// 		},
+	// 		body: JSON.stringify(updatedProduct),
+	// 	});
+	// 	const data = await res.json();
+	// 	if (!data.success) return{ success:false, message:data.message};
+
+	// 	set((state) =>  ({products: state.products.map((product) => product._id === pid ? data.data: product)}
+	// 					));
+	// }
+
+
+
+	updateProduct: async (pid, updatedProduct) => {
+		try {
+			const res = await fetch(`/api/products/${pid}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(updatedProduct),
+			});
+	
+			if (!res.ok) {
+				const errorData = await res.json();
+				console.error("Update failed:", errorData.message);
+				return { success: false, message: errorData.message || "Update failed." };
+			}
+	
+			const data = await res.json();
+	
+			if (data.success) {
+				// Correctly update the products array
+				set((state) => ({
+					products: state.products.map((product) =>
+						product._id === pid ? { ...product, ...data.data } : product
+					),
+				}));
+				return { success: true, message: "Product updated successfully." };
+			} else {
+				console.error("Update failed:", data.message);
+				return { success: false, message: data.message || "Error updating product." };
+			}
+		} catch (error) {
+			console.error("Unexpected error updating product:", error);
+			return { success: false, message: "An unexpected error occurred." };
+		}
+	},
+	
+	
 }));
 
 

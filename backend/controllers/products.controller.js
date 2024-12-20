@@ -24,8 +24,8 @@ export const createProduct = async(req, res) =>{
     const newProduct = new Product(product); //Using the entered data to create a product. Use the Product model
 
     try {
-        await newProduct.save();
-        res.status(201).json({success: true, message: "Product created successfully"});
+        const savedProduct = await newProduct.save();
+        res.status(201).json({success: true, message: "Product created successfully", data: savedProduct});
     }
     catch (error) {
         console.log("Error in creating product", error.message);
@@ -64,8 +64,8 @@ export const updateProduct = async(req, res) =>{
     }
 
     try {
-        await Product.findByIdAndUpdate(id, product, { new: true });
-        res.status(200).json({ success: true, message: "Product updated" });
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, { new: true });
+        res.status(200).json({ success: true, message: "Product updated", data:updatedProduct });
     }
     catch (error) {
         res.status(500).json({ success: false, message: "Server Error"});

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Heading, Text, HStack, Image, VStack, Button} from "@chakra-ui/react";
+import { Box, Heading, Text, HStack, Image, VStack, Button, Input} from "@chakra-ui/react";
 import {
   DialogActionTrigger,
   DialogBody,
@@ -23,6 +23,7 @@ const ProductCard = ({ product }) => {
 
   const{ deleteProduct } = useStore();
 
+  // runs the deleteProduct method in the frontend
   const handleDeleteProduct = async (pid) =>{
     const {success, message} = await deleteProduct(pid);
 
@@ -47,6 +48,37 @@ const ProductCard = ({ product }) => {
         })
     }
   }
+
+  // runs the updateProduct in the frontend
+  const [updatedProduct, setUpdatedProduct] = useState(product);  
+
+  const { updateProduct } = useStore();
+
+  const handleUpdateProduct = async (pid, updatedProduct) => {
+    const { success, message } = await updateProduct(pid, updatedProduct);
+
+    if (success) {
+        toast.success("Product updated successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          });
+        setOpen(false); // Close the dialog only on success
+    } else {
+      toast.error(`Error${message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    
+    }
+  };
 
 	return (
 		<Box
@@ -76,7 +108,9 @@ const ProductCard = ({ product }) => {
           <Button size={"2xs"} onClick={ () => handleDeleteProduct(product._id) }>< MdDelete/></Button>
 
           <DialogRoot lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
-            <DialogTrigger asChild> <Button variant={"outline"}> < MdUpdate/> </Button></DialogTrigger>
+            <DialogTrigger asChild>
+              <Button size={"2xs"}>< MdUpdate/></Button>
+            </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Update Product</DialogTitle>
@@ -88,9 +122,9 @@ const ProductCard = ({ product }) => {
                     border='0.5px solid'
                     borderColor='#696969'
                     name='name'
-                    value={UpdatedProduct.name}
+                    value={updatedProduct.name}
                     onChange={(e) =>
-                      setUpdatedProduct({ ...updatedProduct, name: e.target.value })
+                    setUpdatedProduct({ ...updatedProduct, name: e.target.value })
                     }
                   />
 
@@ -100,9 +134,9 @@ const ProductCard = ({ product }) => {
                     borderColor='#696969'
                     name='price'
                     type='number'
-                    value={UpdatedProduct.price}
+                    value={updatedProduct.price}
                     onChange={(e) =>
-                      setUpdatedProduct({ ...updatedProduct, price: e.target.value })
+                    setUpdatedProduct({ ...updatedProduct, price: e.target.value })
                     }
                   />
 
@@ -111,13 +145,20 @@ const ProductCard = ({ product }) => {
                     border='0.5px solid'
                     borderColor='#696969'
                     name='image'
-                    value={UpdatedProduct.image}
+                    value={updatedProduct.image}
                     onChange={(e) =>
-                      setUpdatedProduct({ ...updatedProduct, image: e.target.value })
+                    setUpdatedProduct({ ...updatedProduct, image: e.target.value })
                     }
                   />
                 </VStack>
               </DialogBody>
+              <DialogFooter>
+                <DialogActionTrigger asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DialogActionTrigger>
+                <Button variant={"ghost"} onClick={ () => handleUpdateProduct(product._id, updatedProduct)}>Update</Button>
+              </DialogFooter>
+              <DialogCloseTrigger />
             </DialogContent>
           </DialogRoot>          
         </HStack>
