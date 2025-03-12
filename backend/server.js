@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 5000
 
 const __dirname = path.resolve();
 
+// use jason
 app.use(express.json());
 
 app.use("/api/products",productRoutes);
